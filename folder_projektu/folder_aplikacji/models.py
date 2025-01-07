@@ -56,3 +56,7 @@ class Stanowisko(models.Model):
     
     def __str__(self):
         return self.nazwa
+    
+
+def __str__(self):
+    return f"Person : {self.firstname} {self.lastname}, dodana w {self.month_added}, o rozmiarze koszuli {self.shirt_size}." 

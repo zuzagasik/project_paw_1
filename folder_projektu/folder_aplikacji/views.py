@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Person, Team
 from .serializers import PersonSerializer
+from django.http import HttpResponse
+import datetime
 
 # określamy dostępne metody żądania dla tego endpointu
 @api_view(['GET'])
@@ -51,3 +53,35 @@ def person_detail(request, pk):
     elif request.method == 'DELETE':
         person.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# kod umieszczamy w pliku views.py wybranej aplikacji
+
+from django.http import HttpResponse
+import datetime
+
+
+def welcome_view(request):
+    now = datetime.datetime.now()
+    html = f"""
+        <html><body>
+        Witaj użytkowniku! </br>
+        Aktualna data i czas na serwerze: {now}.
+        </body></html>"""
+    return HttpResponse(html)
+
+# pominięto inne importy
+from .models import Person
+
+# pominięto definicję innych widoków
+
+# dodajemy brakujący import
+from django.shortcuts import render
+
+def person_list_html(request):
+    # pobieramy wszystkie obiekty Person z bazy poprzez QuerySet
+    persons = Person.objects.all()
+
+    return render(request,
+                  "folder_aplikacji/person/list.html",
+                  {'persons': persons})
